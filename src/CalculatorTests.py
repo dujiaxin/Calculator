@@ -7,5 +7,7 @@ class MyTestCase(unittest.TestCase):
         calculator = Calculator()
         self.assertIsInstance(calculator, Calculator)
 
+
+
 if __name__ == '__main__':
     unittest.main()
