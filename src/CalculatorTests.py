@@ -11,13 +11,13 @@ class MyTestCase(unittest.TestCase):
         self.assertIsInstance(self.calculator, Calculator)
 
     def test_add_method_calculator(self):
-        test_data = CsvReader('/src/Test_Addition.csv').data
+        test_data = CsvReader('/src/Unit Test Addition.csv').data
         for row in test_data:
             self.assertEqual(self.calculator.addition(row['Value 1'], row['Value 2']), int(row['Result']))
             self.assertEqual(self.calculator.result, int(row['Result']))
 
     def test_subtract_method_calculator(self):
-        test_data = CsvReader('/src/Test_Subtraction.csv').data
+        test_data = CsvReader('/src/Unit Test Division.csv').data
         for row in test_data:
             self.assertEqual(self.calculator.subtraction(row['Value 1'], row['Value 2']), int(row['Result']))
             self.assertEqual(self.calculator.result, int(row['Result']))
