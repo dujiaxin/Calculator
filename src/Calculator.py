@@ -1,9 +1,13 @@
 def addition(a, b):
+    a = int(a)
+    b = int(b)
     return a + b
 
 
-def subtraction(a, b):
-    return a - b
+def subtraction(substract, substracted):
+    substract = int(substract)
+    substracted = int(substracted)
+    return substracted - substract
 
 
 class Calculator:
