@@ -77,7 +77,7 @@ def randomly_greet(name):
     print(f"Using {greeter!r}")
     return greeter_func(name)
     
-def repeat(num_times):
+def repeat(_func=None, *, num_times=2):
     def decorator_repeat(func):
         @functools.wraps(func)
         def wrapper_repeat(*args, **kwargs):
@@ -85,4 +85,8 @@ def repeat(num_times):
                 value = func(*args, **kwargs)
             return value
         return wrapper_repeat
-    return decorator_repeat
+
+    if _func is None:
+        return decorator_repeat
+    else:
+        return decorator_repeat(_func)
