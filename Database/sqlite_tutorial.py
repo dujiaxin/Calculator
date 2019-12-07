@@ -164,3 +164,24 @@ for ol in c1.orders[1].order_lines:
 
 
 session.query(Customer).all()
+print(session.query(Customer))
+
+q = session.query(Customer)
+
+for c in q:
+    print(c.id, c.first_name)
+
+session.query(Customer.id, Customer.first_name).all()
+
+
+session.query(Customer).count() # get the total number of records in the customers table
+session.query(Item).count()  # get the total number of records in the items table
+session.query(Order).count()  # get the total number of records in the orders table
+
+session.query(Customer).first()
+session.query(Item).first()
+session.query(Order).first()
+
+session.query(Customer).get(1)
+session.query(Item).get(1)
+session.query(Order).get(100)
