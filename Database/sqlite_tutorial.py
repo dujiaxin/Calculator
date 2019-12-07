@@ -185,3 +185,106 @@ session.query(Order).first()
 session.query(Customer).get(1)
 session.query(Item).get(1)
 session.query(Order).get(100)
+
+
+session.query(Customer).filter(Customer.first_name == 'John').all()
+
+print(session.query(Customer).filter(Customer.first_name == 'John'))
+
+session.query(Customer).filter(Customer.id <= 5, Customer.town == "Norfolk").all()
+
+print(session.query(Customer).filter(Customer.id <= 5, Customer.town.like("Nor%"))
+
+# find all customers who either live in Peterbrugh or Norfolk
+
+session.query(Customer).filter(or_(
+    Customer.town == 'Peterbrugh',
+    Customer.town == 'Norfolk'
+)).all()
+
+# find all customers whose first name is John and live in Norfolk
+
+session.query(Customer).filter(and_(
+    Customer.first_name == 'John',
+    Customer.town == 'Norfolk'
+)).all()
+
+# find all johns who don't live in Peterbrugh
+
+session.query(Customer).filter(and_(
+    Customer.first_name == 'John',
+    not_(
+        Customer.town == 'Peterbrugh',
+    )
+)).all()
+
+session.query(Order).filter(Order.date_shipped == None).all()
+session.query(Order).filter(Order.date_shipped == None).all()
+session.query(Customer).filter(Customer.first_name.in_(['Toby', 'Sarah'])).all()
+session.query(Customer).filter(Customer.first_name.notin_(['Toby', 'Sarah'])).all()
+session.query(Item).filter(Item.cost_price.between(10, 50)).all()
+session.query(Item).filter(not_(Item.cost_price.between(10, 50))).all()
+
+session.query(Item).filter(Item.name.like("%r")).all() #like
+session.query(Item).filter(Item.name.ilike("w%")).all()
+#NOT LIKE
+session.query(Item).filter(not_(Item.name.like("W%"))).all()
+session.query(Customer).limit(2).all()
+session.query(Customer).filter(Customer.address.ilike("%avenue")).limit(2).all()
+
+print(session.query(Customer).limit(2))
+print(session.query(Customer).filter(Customer.address.ilike("%avenue")).limit(2))
+
+#offset() method
+session.query(Customer).limit(2).offset(2).all()
+print(session.query(Customer).limit(2).offset(2))
+#order_by() method
+session.query(Item).filter(Item.name.ilike("wa%")).all()
+session.query(Item).filter(Item.name.ilike("wa%")).order_by(Item.cost_price).all()
+#join() method
+session.query(Customer).join(Order).all()
+print(session.query(Customer).join(Order))
+session.query(Customer.id, Customer.username, Order.id).join(Order).all()
+session.query(Table1).join(Table2).join(Table3).join(Table4).all()
+session.query(
+    Customer.first_name,
+    Item.name,
+    Item.selling_price,
+    OrderLine.quantity
+).join(Order).join(OrderLine).join(Item).filter(
+    Customer.first_name == 'John',
+    Customer.last_name == 'Green',
+    Order.id == 1,
+).all()
+session.query(
+    Customer.first_name,
+    Item.name,
+    Item.selling_price,
+    OrderLine.quantity
+).join(Order).join(OrderLine).join(Item).filter(
+    Customer.first_name == 'John',
+    Customer.last_name == 'Green',
+    Order.id == 1,
+).all()
+#outerjoin() method
+session.query(
+    Customer.first_name,
+    Order.id,
+).outerjoin(Order).all()
+#
+session.query(
+    Customer.first_name,
+    Order.id,
+).outerjoin(Order, full=True).all()
+#group_by() method
+from sqlalchemy import func
+session.query(func.count(Customer.id)).join(Order).filter(
+    Customer.first_name == 'John',
+    Customer.last_name == 'Green',
+).group_by(Customer.id).scalar()
+#having() method
+session.query(
+    func.count("*").label('town_count'),
+    Customer.town
+).group_by(Customer.town).having(func.count("*") > 2).all()
+
