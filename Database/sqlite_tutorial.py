@@ -61,3 +61,15 @@ c2 = Customer(first_name='Scott',
               )
 
 c1, c2
+session.add(c1)
+session.add(c2)
+
+session.add_all([c1, c2])
+
+session.new
+session.commit()
+
+c1.id, c2.id
+
+c1.orders, c2.orders
+
