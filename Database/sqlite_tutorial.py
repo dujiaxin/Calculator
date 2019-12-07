@@ -313,3 +313,15 @@ session.query(
 s1 = session.query(Item.id, Item.name).filter(Item.name.like("Wa%"))
 s2 = session.query(Item.id, Item.name).filter(Item.name.like("%e%"))
 s1.union(s2).all()
+
+s1.union_all(s2).all()
+
+# Updating Data
+i = session.query(Item).get(8)
+i.selling_price = 25.91
+session.add(i)
+session.commit()
+session.query(Item).filter(
+    Item.name.ilike("W%")
+).update({"quantity": 60}, synchronize_session='fetch')
+session.commit()
