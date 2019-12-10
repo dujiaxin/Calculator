@@ -5,6 +5,8 @@ from sqlalchemy import create_engine, MetaData, Table, Integer, String, \
 
 from datetime import datetime
 
+# some code runs in interactive console
+
 metadata = MetaData()
 engine = create_engine("sqlite:///web/Sqlite-Data/example.db")
 customers = Table('customers', metadata,
@@ -110,6 +112,7 @@ c6 = Customer(first_name='Scott',
 session.add_all([c3, c4, c5, c6])
 session.commit()
 
+# Adding items
 i1 = Item(name='Chair', cost_price=9.21, selling_price=10.81, quantity=5)
 i2 = Item(name='Pen', cost_price=3.45, selling_price=4.51, quantity=3)
 i3 = Item(name='Headphone', cost_price=15.52, selling_price=16.81, quantity=50)
@@ -122,6 +125,7 @@ i8 = Item(name='Water Bottle', cost_price=20.89, selling_price=25, quantity=50)
 session.add_all([i1, i2, i3, i4, i5, i6, i7, i8])
 session.commit()
 
+# Adding orders
 o1 = Order(customer=c1)
 o2 = Order(customer=c1)
 
@@ -162,9 +166,12 @@ print('-------')
 for ol in c1.orders[1].order_lines:
     ol.id, ol.item, ol.quantity
 
-
-session.query(Customer).all()
-print(session.query(Customer))
+print("=========Customers=========")
+# prints all the records of  the Customers table
+result = session.query(sqlite_create.Customer).all()
+for row in result:
+    print("Name: ", row.first_name, " ", row.last_name, " Address:", row.address, " Email:", row.email)
+print("===========================")
 
 q = session.query(Customer)
 
